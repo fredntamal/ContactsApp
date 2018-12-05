@@ -1,0 +1,26 @@
+package Controller;
+
+import GUI.FormEvent;
+import Model.Database;
+import Model.Person;
+
+import java.util.List;
+
+public class Control {
+
+    Database db = new Database();
+
+    public List<Person> getPeople() {
+        return db.getPeople();
+    }
+
+    public void addPerson(FormEvent ev) {
+        String name = ev.getName();
+        String email = ev.getEmail();
+        String number = ev.getNumber();
+
+        Person person = new Person(name, email, number);
+
+        db.addPerson(person);
+    }
+}
