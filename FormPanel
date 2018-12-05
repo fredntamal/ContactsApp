@@ -1,0 +1,127 @@
+package GUI;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class FormPanel extends JPanel {
+
+    private JLabel nameLabel;
+    private JLabel emailLabel;
+    private JLabel numberLabel;
+    private JTextField nameField;
+    private JTextField emailField;
+    private JTextField numberField;
+    private JButton okButton;
+    private FormListener formListener;
+
+    public FormPanel() {
+        Dimension dim = getPreferredSize();
+        dim.width = 250;
+        setPreferredSize(dim);
+
+        nameLabel = new JLabel("Name");
+        emailLabel = new JLabel("Email");
+        numberLabel = new JLabel("Number");
+        nameField = new JTextField(10);
+        emailField = new JTextField(10);
+        numberField = new JTextField(10);
+        okButton = new JButton("OK");
+
+
+
+
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameField.getText();
+                String email = emailField.getText();
+                String number = numberField.getText();
+
+                FormEvent ev = new FormEvent(this, name, email, number);
+
+                if (formListener != null) {
+                    formListener.formEventOccurred(ev);
+                }
+            }
+        });
+
+        Border innerBorder = BorderFactory.createTitledBorder("Add Person");
+        Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
+        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+        layoutComponents();
+    }
+
+    public void layoutComponents() {
+        setLayout(new GridBagLayout());
+
+        GridBagConstraints gc = new GridBagConstraints();
+
+        // first row
+        gc.gridy = 0;
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+
+        gc.gridx = 0;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(nameLabel, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 0;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(nameField, gc);
+
+        // second row
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(emailLabel, gc);
+
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(emailField, gc);
+
+        // third row
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.2;
+
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(numberLabel, gc);
+
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(numberField, gc);
+
+        // next row
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.2;
+
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(okButton, gc);
+    }
+
+    public void setFormListener(FormListener listener) {
+        this.formListener = listener;
+    }
+}
