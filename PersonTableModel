@@ -1,0 +1,45 @@
+package GUI;
+
+import Model.Person;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.List;
+
+public class PersonTableModel extends AbstractTableModel {
+
+    private List<Person> db;
+
+    public PersonTableModel() {
+    }
+
+    public void setData(List<Person> db) {
+        this.db = db;
+    }
+
+    @Override
+    public int getRowCount() {
+        return db.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 4;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Person person = db.get(rowIndex);
+
+        switch (columnIndex) {
+            case 0:
+                return person.getId();
+            case 1:
+                return person.getName();
+            case 2:
+                return person.getEmail();
+            case 3:
+                return person.getNumber();
+        }
+        return null;
+    }
+}
